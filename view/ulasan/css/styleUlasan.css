@@ -131,7 +131,7 @@ h4 {
 .dropdown-filter {
     padding: 10px;
     border-radius: 5px;
-    width: 400px;
+    width: 300px;
     height: 50px;
     border: 1px solid var(--abu-abu);
 }
@@ -139,7 +139,7 @@ h4 {
 .search-box {
     padding: 10px;
     border-radius: 5px;
-    width: 400px;
+    width: 300px;
     height: 50px;
     border: 1px solid var(--abu-abu);
 }
@@ -181,10 +181,9 @@ h4 {
 }
 
 .line-project-card {
-    width: 0.1rem;
+    width: 1px;
     height: 270px;
     background-color: var(--abu-abu);
-    margin-left: 200px;
 }
 
 .project-wrapper img.gambarProject {
@@ -194,10 +193,12 @@ h4 {
 
 .judul-project h6 {
     color: var(--biru-tua);
-    font-size: larger;
+    font-size: 24px;
 }
 
-
+.judul-project p {
+    color: var(--abu-abu);
+}
 
 .judul-project a {
     border-radius: 10px;
@@ -216,17 +217,69 @@ h4 {
 }
 
 .ulas-gambar-project {
-    width: 300px;
-    height: 300px;
+    width: 388px;
+    height: 366px;
 }
 
-.text-ulasan {
+.input-ulasan textarea {
     border-radius: 10px;
-    border: 1px solid var(--abu-abu);
+    border: none;
     padding: 20px;
     box-sizing: border-box;
-    width: 700px;
-    height: 200px;
-    background-color: var(--putih);
-    text-align: justify;
+}
+
+.input-ulasan textarea:active,
+textarea:focus {
+    outline: 0px !important;
+    -webkit-appearance: none;
+    appearance: none;
+    box-shadow: none !important;
+}
+
+.input-ulasan button.cancel-button {
+    width: 120px;
+    height: 30px;
+    border-radius: 8px;
+    border: 1px solid var(--abu-abu);
+    color: var(--biru-tua);
+    transition: 0.3s;
+}
+
+.cancel-button a {
+    text-decoration: none;
+}
+
+
+.input-ulasan button.kirim-button {
+    width: 120px;
+    height: 30px;
+    border-radius: 8px;
+    border: none;
+    background-color: var(--biru-muda);
+    color: var(--putih);
+    transition: 0.3s;
+}
+
+.input-ulasan button.kirim-button:hover {
+    background-color: var(--biru-tua);
+}
+.input-ulasan button.cancel-button:hover {
+    background-color: var(--biru-muda-sekali);
+}
+
+#bintang-rating.rating-bintang i{
+    margin-right: 10px;
+    width:16px;
+}
+
+.star-rating label{
+    cursor: pointer;
+}
+
+.star-rating input[type="radio"]:checked + label{
+    color: #ffc800;
+}
+
+.star-rate label{
+    cursor: pointer;
 }
