@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Freelance Dashboard | Nganggur</title>
+    <title>Responsive Admin Dashboard | Korsat X Parmaga</title>
     <!-- ======= Styles ====== -->
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
@@ -104,27 +104,27 @@ require("config.php");
 
                 <div class="card">
                     <?php
-                        $pesanandata = mysqli_query($conn, "SELECT COUNT(pekerjaan_request.id_pekerjaan) FROM menawarkan_jasa INNER JOIN pekerjaan_request ON pekerjaan_request.id_pekerjaan = menawarkan_jasa.id_pekerjaan INNER JOIN umkm ON pekerjaan_request.id_umkm = umkm.id_user WHERE menawarkan_jasa.status = 'terima' AND pekerjaan_request.status = 'mulai' OR pekerjaan_request.status = 'revisi' OR pekerjaan_request.status = 'selesai' AND menawarkan_jasa.id_pekerja_jasa = 1;");
+                        $pesanandata = mysqli_query($conn, "SELECT count(pembayaran.id_pembayaran) FROM `pembayaran`INNER JOIN pekerjaan_request ON pembayaran.id_pekerjaan = pekerjaan_request.id_pekerjaan WHERE pembayaran.id_umkm = 3 and pembayaran.status ='berhasil';");
                         $pesanan = mysqli_fetch_array($pesanandata) 
                     ?>
                     <div>
                         <div class="numbers"><?php echo $pesanan[0]; ?></div>
-                        <div class="cardName">Penjualan</div>
+                        <div class="cardName">Project Yang Ditawarkan</div>
                     </div>
 
                     <div class="iconBx">
-                        <ion-icon name="cart-outline"></ion-icon>
+                        <ion-icon name="briefcase-outline"></ion-icon>
                     </div>
                 </div>
 
                 <div class="card">
                     <div>
                     <?php
-                        $penilaiandata = mysqli_query($conn, "SELECT COUNT(penilaian.id_penilaian) FROM penilaian INNER JOIN pekerjaan_request ON penilaian.id_pekerjaan = pekerjaan_request.id_pekerjaan INNER JOIN menawarkan_jasa ON pekerjaan_request.id_pekerjaan = menawarkan_jasa.id_pekerjaan WHERE pekerjaan_request.status = 'selesai'  AND menawarkan_jasa.id_pekerja_jasa = 1;");
+                        $penilaiandata = mysqli_query($conn, "SELECT count(chat.id_chat) FROM `chat` WHERE chat.id_umkm = 3;");
                         $penilaian = mysqli_fetch_array($penilaiandata) 
                     ?>
                         <div class="numbers"><?php echo $penilaian[0]; ?></div>
-                        <div class="cardName">Penilain</div>
+                        <div class="cardName">Inbox</div>
                     </div>
 
                     <div class="iconBx">
@@ -134,12 +134,12 @@ require("config.php");
 
                 <div class="card">
                     <?php
-                        $penghasilandata = mysqli_query($conn, "SELECT sum(penghasilan.pemasukan) FROM penghasilan INNER JOIN pembayaran ON penghasilan.id_pembayaran = pembayaran.id_pembayaran INNER JOIN menawarkan_jasa ON menawarkan_jasa.id_pekerjaan = pembayaran.id_pekerjaan WHERE penghasilan.status = 'lunas'  AND menawarkan_jasa.id_pekerja_jasa = 1");
+                        $penghasilandata = mysqli_query($conn, "SELECT sum(pekerjaan_request.harga) FROM `pembayaran`INNER JOIN pekerjaan_request ON pembayaran.id_pekerjaan = pekerjaan_request.id_pekerjaan WHERE pembayaran.id_umkm = 3 and pembayaran.status ='berhasil';");
                         $penghasilan = mysqli_fetch_array($penghasilandata) 
                     ?>
                     <div>
                         <div class="numbers">Rp. <?php echo $penghasilan[0]; ?></div>
-                        <div class="cardName">Penghasilan</div>
+                        <div class="cardName">Pengeluaran</div>
                     </div>
 
                     <div class="iconBx">
@@ -161,13 +161,13 @@ require("config.php");
                             <tr>
                                 <td>No</td>
                                 <td>Nama Pekerjaan</td>
-                                <td>Pelanggan</td>
+                                <td>Nama Pekerja</td>
                                 <td>Status</td>
                             </tr>
                         </thead>
                         <tbody>
                         <?php
-                            $row = mysqli_query($conn, "SELECT menawarkan_jasa.id_pekerja_jasa,pekerjaan_request.nama_pekerjaan,pekerjaan_request.harga,umkm.nama_perusahaan,pekerjaan_request.status,pekerjaan_request.status as statusclass FROM menawarkan_jasa INNER JOIN pekerjaan_request ON pekerjaan_request.id_pekerjaan = menawarkan_jasa.id_pekerjaan INNER JOIN umkm ON pekerjaan_request.id_umkm = umkm.id_user WHERE menawarkan_jasa.status = 'terima' AND pekerjaan_request.status = 'mulai' OR pekerjaan_request.status = 'revisi' OR pekerjaan_request.status = 'selesai' AND menawarkan_jasa.id_pekerja_jasa = 1;");
+                            $row = mysqli_query($conn, "SELECT pekerjaan_request.id_umkm,menawarkan_jasa.id_pekerja_jasa,pekerjaan_request.nama_pekerjaan,pekerjaan_request.harga,pekerja_jasa.nama_pertama,pekerja_jasa.nama_terakhir,pekerjaan_request.status,pekerjaan_request.status as statusclass FROM menawarkan_jasa INNER JOIN pekerjaan_request ON pekerjaan_request.id_pekerjaan = menawarkan_jasa.id_pekerjaan INNER JOIN pekerja_jasa ON menawarkan_jasa.id_pekerja_jasa = pekerja_jasa.id_user WHERE menawarkan_jasa.status = 'terima' AND pekerjaan_request.id_umkm = 3;");
                             $no = 0;
                             while ($data = mysqli_fetch_array($row)) {
                                 $no++;
@@ -175,7 +175,7 @@ require("config.php");
                             <tr>
                                 <td><?php echo $no; ?> </td>
                                 <td><?php echo $data['nama_pekerjaan']; ?></td>
-                                <td><?php echo $data['nama_perusahaan']; ?></td>
+                                <td><?php echo $data['nama_pertama']." ".$data['nama_terakhir'] ; ?></td>
                                 <td><span><?php echo $data['status']; ?></span></td>
                             </tr>
                             <?php
@@ -189,7 +189,7 @@ require("config.php");
                 <!-- ================= New Customers ================ -->
                 <div class="recentCustomers">
                     <div class="cardHeader">
-                        <h2>Recent Customers</h2>
+                        <h2>Recent Workers</h2>
                         <a href="#" class="btn">View All</a>
                     </div>
 
@@ -197,11 +197,11 @@ require("config.php");
                     <thead>
                             <tr>
                                 <td>No</td>
-                                <td>Pelanggan</td>
+                                <td>Nama Pekerja</td>
                             </tr>
                         </thead>
                     <?php
-                            $row = mysqli_query($conn, "SELECT umkm.nama_perusahaan FROM menawarkan_jasa INNER JOIN pekerjaan_request ON pekerjaan_request.id_pekerjaan = menawarkan_jasa.id_pekerjaan INNER JOIN umkm ON pekerjaan_request.id_umkm = umkm.id_user WHERE menawarkan_jasa.status = 'terima' AND pekerjaan_request.status = 'mulai' OR pekerjaan_request.status = 'revisi' OR pekerjaan_request.status = 'selesai' AND menawarkan_jasa.id_pekerja_jasa = 1 GROUP BY umkm.nama_perusahaan");
+                            $row = mysqli_query($conn, "SELECT pekerjaan_request.id_umkm,menawarkan_jasa.id_pekerja_jasa,pekerjaan_request.nama_pekerjaan,pekerjaan_request.harga,pekerja_jasa.nama_pertama,pekerja_jasa.nama_terakhir,pekerjaan_request.status,pekerjaan_request.status as statusclass FROM menawarkan_jasa INNER JOIN pekerjaan_request ON pekerjaan_request.id_pekerjaan = menawarkan_jasa.id_pekerjaan INNER JOIN pekerja_jasa ON menawarkan_jasa.id_pekerja_jasa = pekerja_jasa.id_user WHERE menawarkan_jasa.status = 'terima' AND pekerjaan_request.id_umkm = 3 GROUP BY pekerja_jasa.id_user");
                             $no = 0;
                             while ($data = mysqli_fetch_array($row)) {
                                 $no++;
@@ -209,7 +209,7 @@ require("config.php");
                         <tr>
                             <td><?php echo $no; ?></td>
                             <td>
-                                <h4><?php echo $data['nama_perusahaan']; ?></h4>
+                                <h4><?php echo $data['nama_pertama']." ".$data['nama_terakhir'] ; ?></h4>
                             </td>
                         </tr>
                         <?php
